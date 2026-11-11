@@ -1,0 +1,240 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* History IAS Academy tokens: crest navy ink on warm paper,
+     crest red accent. See design.md */
+  --background: #faf9f3;
+  --foreground: #181a2e;
+  --card: #ffffff;
+  --card-foreground: #181a2e;
+  --popover: #ffffff;
+  --popover-foreground: #181a2e;
+  --primary: #13157e;
+  --primary-foreground: #f1f2fd;
+  --secondary: #c01111;
+  --secondary-foreground: #fdf3f3;
+  --muted: #eceade;
+  --muted-foreground: #5b5e70;
+  --accent: #ececf9;
+  --accent-foreground: #181a2e;
+  --destructive: #b3382c;
+  --destructive-foreground: #fdf6f4;
+  --border: #e1dfd1;
+  --input: #d8d6c7;
+  --ring: #13157e;
+  --gold: #c14e33;
+  --gold-ink: #96361f;
+  --radius: 0.75rem;
+  --chart-1: #13157e;
+  --chart-2: #c01111;
+  --chart-3: #c14e33;
+  --chart-4: #b08a2e;
+  --chart-5: #3f5aa8;
+  --sidebar: #f1f0e5;
+  --sidebar-foreground: #181a2e;
+  --sidebar-primary: #13157e;
+  --sidebar-primary-foreground: #f1f2fd;
+  --sidebar-accent: #ececf9;
+  --sidebar-accent-foreground: #181a2e;
+  --sidebar-border: #e1dfd1;
+  --sidebar-ring: #13157e;
+}
+
+.dark {
+  --background: #0f1125;
+  --foreground: #e7e9f6;
+  --card: #161936;
+  --card-foreground: #e7e9f6;
+  --popover: #161936;
+  --popover-foreground: #e7e9f6;
+  --primary: #a9b0f5;
+  --primary-foreground: #10122b;
+  --secondary: #e07a7a;
+  --secondary-foreground: #2a0d0d;
+  --muted: #1d2140;
+  --muted-foreground: #a6abcf;
+  --accent: #232752;
+  --accent-foreground: #e7e9f6;
+  --destructive: #e06c5f;
+  --destructive-foreground: #1a0f0d;
+  --border: #2a2f57;
+  --input: #2a2f57;
+  --ring: #a9b0f5;
+  --gold: #e8956d;
+  --gold-ink: #eaa27f;
+  --chart-1: #a9b0f5;
+  --chart-2: #e07a7a;
+  --chart-3: #e8956d;
+  --chart-4: #d8b45e;
+  --chart-5: #7d93e0;
+  --sidebar: #131631;
+  --sidebar-foreground: #e7e9f6;
+  --sidebar-primary: #a9b0f5;
+  --sidebar-primary-foreground: #10122b;
+  --sidebar-accent: #232752;
+  --sidebar-accent-foreground: #e7e9f6;
+  --sidebar-border: #2a2f57;
+  --sidebar-ring: #a9b0f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-sans-body), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-display), ui-serif, Georgia, serif;
+  --font-mono: var(--font-data), ui-monospace, monospace;
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--gold) 35%, transparent);
+  }
+  /* Motion: one curve, under 300ms, transform+opacity only */
+  :root {
+    --ease-out-soft: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  button:not(:disabled):active,
+  a:not(.no-active-scale):active {
+    transform: scale(0.97);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar for long lists (design.md: reading-first) */
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted-foreground) 40%, transparent) transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted-foreground) 35%, transparent);
+    border-radius: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  /* View enter animation: 240ms fade + rise */
+  .view-enter {
+    animation: view-enter 240ms var(--ease-out-soft) both;
+  }
+  @keyframes view-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .stagger > * {
+    animation: view-enter 240ms var(--ease-out-soft) both;
+  }
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 40ms; }
+  .stagger > *:nth-child(3) { animation-delay: 80ms; }
+  .stagger > *:nth-child(4) { animation-delay: 120ms; }
+  .stagger > *:nth-child(5) { animation-delay: 160ms; }
+  .stagger > *:nth-child(6) { animation-delay: 200ms; }
+  .stagger > *:nth-child(7) { animation-delay: 240ms; }
+  .stagger > *:nth-child(8) { animation-delay: 280ms; }
+  /* Masked price token, mono and deliberate */
+  .price-mask {
+    font-family: var(--font-data), ui-monospace, monospace;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+  }
+  /* Hairline double rule used as brand motif (echoes the crest ring) */
+  .rule-ring {
+    border-top: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    position: relative;
+  }
+  .rule-ring::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid color-mix(in srgb, var(--gold) 25%, transparent);
+  }
+}
+
+/* Globe container: kill double-scroll, size honestly */
+.globe-host {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+}
+.globe-host canvas {
+  display: block;
+}
