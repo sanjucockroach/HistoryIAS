@@ -49,8 +49,8 @@ export function ContactView() {
       </Reveal>
 
       {/* Campus cards with maps */}
-      <section aria-label="Campuses" className="mt-10 grid gap-6 lg:grid-cols-2">
-        <Reveal group gap={150} className="contents">
+      <section aria-label="Campuses" className="mt-10">
+        <Reveal group gap={150} className="grid gap-6 lg:grid-cols-2">
           {BRAND.campuses.map((campus) => (
           <article
             key={campus.id}

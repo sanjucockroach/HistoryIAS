@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { ElementType, ReactNode } from 'react';
 import { animate, stagger as staggerFn, utils } from 'animejs';
 
@@ -10,6 +10,14 @@ export function prefersReducedMotion(): boolean {
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 }
+
+/**
+ * Client components are still server-rendered by Next.js, where
+ * useLayoutEffect is a no-op that logs a React warning — pick the right
+ * effect per environment (layout timing on the client, effect on the server).
+ */
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 interface RevealProps {
   children: ReactNode;
@@ -45,17 +53,34 @@ export function Reveal({
   const ref = useRef<HTMLDivElement | null>(null);
   const Tag = (as ?? 'div') as 'div';
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    /* Fail-safe: a reveal bug must never permanently hide content. */
+    const forceVisible = () => {
+      el.style.opacity = '1';
+      if (group) {
+        Array.from(el.children).forEach((child) => {
+          (child as HTMLElement).style.opacity = '1';
+          (child as HTMLElement).style.transform = '';
+        });
+      }
+    };
 
     if (prefersReducedMotion()) {
       el.style.opacity = '1';
       return;
     }
 
-    const targets = group ? Array.from(el.children) : [el];
-    utils.set(targets, { opacity: 0, y });
+    let targets: Element[] = [];
+    try {
+      targets = group ? Array.from(el.children) : [el];
+      utils.set(targets, { opacity: 0, y });
+    } catch {
+      forceVisible();
+      return;
+    }
 
     let animation: ReturnType<typeof animate> | null = null;
     /* Tall containers (long article stacks) can never reach a percentage
@@ -65,17 +90,30 @@ export function Reveal({
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
-        animation = animate(targets, {
-          opacity: [0, 1],
-          y: [y, 0],
-          duration: 760,
-          delay: group ? staggerFn(Math.min(gap, 620 / targets.length)) : delay,
-          ease: 'outExpo',
-        });
+        /* The wrapper carries inline opacity:0 from SSR (flash guard).
+           In group mode only the children stagger, so the wrapper must be
+           lifted explicitly — otherwise the whole section stays invisible. */
+        if (group) el.style.opacity = '1';
+        try {
+          animation = animate(targets, {
+            opacity: [0, 1],
+            y: [y, 0],
+            duration: 760,
+            delay: group ? staggerFn(Math.min(gap, 620 / targets.length)) : delay,
+            ease: 'outExpo',
+          });
+        } catch {
+          forceVisible();
+        }
       },
       { threshold: isTall ? 0 : threshold, rootMargin: '0px 0px -6% 0px' },
     );
-    io.observe(el);
+
+    try {
+      io.observe(el);
+    } catch {
+      forceVisible();
+    }
 
     return () => {
       io.disconnect();
