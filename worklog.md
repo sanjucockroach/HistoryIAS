@@ -200,3 +200,13 @@ Stage Summary:
 - Header/footer/about/home copy rewritten (BECOME AN IAS - SINCE 2007, Guide/Blend/Test/Mentor method, two campuses); old AI campus imagery replaced with navy/red brand-matched classroom + study-hall generations; unused old brand images deleted
 - localStorage keys migrated: history-ias-syllabus-progress, history-ias-globe-quiz-best; package renamed history-ias-academy; repo target github.com/sanjucockroach/HistoryIAS
 - Hygiene: fixed 3 eslint react-hooks errors (globe-canvas ref-in-render -> effect; carousel/use-mobile setState-in-effect) + quiz-panel null-safety TS error; lint & tsc clean; browser-verified home/news(3 dates)/atlas(8 toggles)/courses/contact(maps)/cart/mobile + chatbot E2E incl. wa.me link; console clean
+
+## Favicon replacement + anime.js motion system (2026-11-11)
+- Favicon: real icon set generated from the HA crest via scripts/make-icons.mjs (sharp) — favicon.ico (16/32/48 PNG-compressed, circle-masked), favicon-16/32/48.png, icon-192/512.png, apple-touch-icon.png; file-convention src/app/favicon.ico so /favicon.ico resolves directly; layout metadata icons switched to cache-busted ?v=2 URLs (the old institute crest lived at the same /brand/logo.png URL and was browser-cached); served bytes verified hash-identical; leftover Z.ai public/logo.svg deleted
+- Motion: animejs@4.5.0 installed; new src/components/custom/reveal.tsx — <Reveal> = IntersectionObserver + anime.js entrance (opacity + y, outExpo 760ms), group stagger mode with capped gap, adaptive threshold (tall containers fire at top edge — fixed news stack never-revealing), prefers-reduced-motion guard, exported prefersReducedMotion
+- Home: hero choreographed (kicker 60ms, h1 180ms, body 320ms, CTAs 470ms, quote 640ms); method grid, learn pillars, ten-reasons list, audience chips, testimonial rail, FAQ and CTA group-reveal on scroll
+- News: masthead reveal; article stack group-reveals and replays on every date/category switch (key=date|category)
+- Path/About/Contact/Resources: headers and card grids wrapped in reveals; campus cards stagger around the Google Maps embeds
+- Chatbot: floating crest button pops in with an outBack spring; panel springs open from its bottom-right origin (scale .93->1, y 18->0, outCubic); newest bubble and typing indicator glide in; reduced motion respected
+- Removed the now-unused .stagger CSS block; .view-enter CSS retained for hash-route swaps; 5 files with stray +x modes normalised
+- Verified in browser: favicon link tags + byte hashes, hero entrance and mid-animation states, tab-switch stagger replay, chatbot E2E (fee intent + wa.me CTA), atlas canvas + 8 toggles, 8 course cards revealed, 2 contact maps, mobile 390px hero + FAB, footer flush (6681==6681); lint clean, console clean

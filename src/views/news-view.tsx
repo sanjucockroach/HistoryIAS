@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Reveal } from '@/components/custom/reveal';
 import { useApp } from '@/lib/store';
 import { CA_CATEGORIES, CA_DATES, NEWS_INDEX } from '@/data/news';
 import type { CaArticle, CaPracticeQuestion } from '@/data/types';
@@ -40,7 +41,7 @@ export function NewsView() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       {/* Masthead */}
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-border pb-6">
+      <Reveal y={16} className="flex flex-wrap items-end justify-between gap-4 border-b border-border pb-6">
         <div>
           <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
             Daily briefing · curated from PIB, The Hindu and Indian Express
@@ -64,7 +65,7 @@ export function NewsView() {
             <dd className="font-mono text-xl font-medium text-gold-ink">{pibCount}</dd>
           </div>
         </dl>
-      </div>
+      </Reveal>
 
       {/* Date + category controls */}
       <div className="sticky top-16 z-10 -mx-4 mt-6 flex flex-wrap items-center gap-3 bg-background/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
@@ -104,7 +105,7 @@ export function NewsView() {
         </div>
       </div>
 
-      {/* Articles */}
+      {/* Articles — the group reveal replays whenever the date or category changes */}
       {filtered.length === 0 ? (
         <p className="py-16 text-center text-sm text-muted-foreground">
           No items in this category for {
@@ -112,11 +113,17 @@ export function NewsView() {
           }. Try another filter.
         </p>
       ) : (
-        <div className="stagger mt-8 space-y-8">
+        <Reveal
+          key={`${date}|${category}`}
+          group
+          gap={120}
+          y={24}
+          className="mt-8 space-y-8"
+        >
           {filtered.map((a) => (
             <NewsArticle key={a.id} article={a} />
           ))}
-        </div>
+        </Reveal>
       )}
 
     </div>

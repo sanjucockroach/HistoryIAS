@@ -2,6 +2,7 @@
 
 import { BadgeCheck, GraduationCap, Landmark, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Reveal } from '@/components/custom/reveal';
 import { useApp } from '@/lib/store';
 import { COURSE_CATALOG } from '@/data/types';
 import { BRAND } from '@/data/site';
@@ -12,21 +13,23 @@ export function PathView() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
-        Courses and fee structure
-      </p>
-      <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
-        One academy, every examination — from Class 9 foundation to the interview board
-      </h1>
-      <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-muted-foreground">
-        Every programme is taught by the Delhi-based faculty team across the
-        Durgakund and Lanka campuses, with regular mock tests, app-based digital
-        material and one-on-one mentoring built into the batch rhythm.
-      </p>
+      <Reveal y={16}>
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
+          Courses and fee structure
+        </p>
+        <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
+          One academy, every examination — from Class 9 foundation to the interview board
+        </h1>
+        <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-muted-foreground">
+          Every programme is taught by the Delhi-based faculty team across the
+          Durgakund and Lanka campuses, with regular mock tests, app-based digital
+          material and one-on-one mentoring built into the batch rhythm.
+        </p>
+      </Reveal>
 
       {/* Programme cards */}
       <section aria-label="Programmes" className="mt-12">
-        <ol className="grid gap-6 lg:grid-cols-2">
+        <Reveal group gap={120} as="ol" className="grid gap-6 lg:grid-cols-2">
           {COURSE_CATALOG.map((c, i) => (
             <li
               key={c.id}
@@ -68,11 +71,11 @@ export function PathView() {
               </div>
             </li>
           ))}
-        </ol>
+        </Reveal>
       </section>
 
       {/* Fee policy */}
-      <section className="mt-14 rounded-xl border border-border bg-muted/60 p-6 sm:p-8">
+      <Reveal className="mt-14 rounded-xl border border-border bg-muted/60 p-6 sm:p-8">
         <h2 className="flex items-center gap-2 font-serif text-xl font-semibold">
           <Wallet className="h-5 w-5 text-gold-ink" aria-hidden />
           How fees work here
@@ -109,10 +112,10 @@ export function PathView() {
             Sample the teaching in today&apos;s briefing
           </Button>
         </div>
-      </section>
+      </Reveal>
 
       {/* Examination coverage strip */}
-      <section className="mt-10 rounded-xl border border-border bg-primary p-6 text-primary-foreground sm:p-8">
+      <Reveal className="mt-10 rounded-xl border border-border bg-primary p-6 text-primary-foreground sm:p-8">
         <div className="flex items-center gap-2.5">
           <Landmark className="h-5 w-5 text-gold" aria-hidden />
           <h2 className="font-serif text-xl font-semibold">
@@ -139,7 +142,7 @@ export function PathView() {
             Ask about a batch
           </Button>
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 }

@@ -41,7 +41,15 @@ export const metadata: Metadata = {
     'CUET CTET UGC NET coaching Varanasi',
     'History IAS Academy',
   ],
-  icons: { icon: '/brand/logo.png', apple: '/brand/logo.png' },
+  icons: {
+    icon: [
+      { url: '/brand/favicon.ico?v=2', sizes: '48x48', type: 'image/x-icon' },
+      { url: '/brand/favicon-32.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/brand/favicon-16.png?v=2', sizes: '16x16', type: 'image/png' },
+      { url: '/brand/icon-192.png?v=2', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: '/brand/apple-touch-icon.png?v=2',
+  },
   openGraph: {
     title: 'History IAS Academy',
     description:

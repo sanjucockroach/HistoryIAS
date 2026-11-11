@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { BRAND } from '@/data/site';
+import { Reveal } from '@/components/custom/reveal';
 
 export function ContactView() {
   const [name, setName] = useState('');
@@ -37,17 +38,20 @@ export function ContactView() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">Contact</p>
-      <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
-        Reach the academy in Varanasi
-      </h1>
-      <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
-        {BRAND.landmark}
-      </p>
+      <Reveal y={16}>
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">Contact</p>
+        <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
+          Reach the academy in Varanasi
+        </h1>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
+          {BRAND.landmark}
+        </p>
+      </Reveal>
 
       {/* Campus cards with maps */}
       <section aria-label="Campuses" className="mt-10 grid gap-6 lg:grid-cols-2">
-        {BRAND.campuses.map((campus) => (
+        <Reveal group gap={150} className="contents">
+          {BRAND.campuses.map((campus) => (
           <article
             key={campus.id}
             className="flex flex-col overflow-hidden rounded-xl border border-border bg-card"
@@ -94,10 +98,12 @@ export function ContactView() {
             />
           </article>
         ))}
+        </Reveal>
       </section>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+        <Reveal y={18}>
+          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="c-name">Your name</Label>
@@ -149,8 +155,9 @@ export function ContactView() {
             either campus between 8 AM and 9 PM.
           </p>
         </form>
+        </Reveal>
 
-        <aside className="space-y-4">
+        <Reveal group gap={110} className="space-y-4">
           <div className="rounded-xl border border-border bg-card p-6">
             <h2 className="flex items-center gap-2 font-serif text-lg font-semibold">
               <Clock className="h-4.5 w-4.5 text-gold-ink" aria-hidden />
@@ -236,7 +243,7 @@ export function ContactView() {
               either campus; a batch plan is mapped for you the same day.
             </p>
           </div>
-        </aside>
+        </Reveal>
       </div>
     </div>
   );

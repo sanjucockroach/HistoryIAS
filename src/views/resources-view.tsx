@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { CheckSquare, FlipHorizontal, ListTree, Puzzle, RotateCcw, Square, Workflow } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Reveal } from '@/components/custom/reveal';
 
 /* ---------------- Syllabus tracker (stored in local memory) ---------------- */
 
@@ -164,10 +165,12 @@ export function ResourcesView() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">Resources</p>
-      <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
-        Revise faster: a tracker, flashcards and the frameworks that mark answers
-      </h1>
+      <Reveal y={16}>
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">Resources</p>
+        <h1 className="mt-3 max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
+          Revise faster: a tracker, flashcards and the frameworks that mark answers
+        </h1>
+      </Reveal>
 
       {/* Syllabus tracker */}
       <section className="mt-12">
@@ -190,7 +193,7 @@ export function ResourcesView() {
           </div>
         </div>
         <Progress value={(totals.completed / totals.total) * 100} className="mt-4 h-1.5" />
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
+        <Reveal group gap={110} className="mt-6 grid gap-5 md:grid-cols-2">
           {SYLLABUS.map((paper) => {
             const paperDone = paper.units.filter((u) => done[u]).length;
             return (
@@ -231,17 +234,19 @@ export function ResourcesView() {
               </section>
             );
           })}
-        </div>
+        </Reveal>
       </section>
 
       {/* Gyan cards */}
       <section className="mt-16">
-        <h2 className="font-serif text-2xl font-semibold">Gyan cards</h2>
-        <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Pocket revision in card form. Click a card to flip it. The full deck
-          is shared in class and on the History IAS Academy app.
-        </p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal>
+          <h2 className="font-serif text-2xl font-semibold">Gyan cards</h2>
+          <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Pocket revision in card form. Click a card to flip it. The full deck
+            is shared in class and on the History IAS Academy app.
+          </p>
+        </Reveal>
+        <Reveal group gap={80} className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {GYAN_CARDS.map((c) => {
             const isFlipped = !!flipped[c.id];
             return (
@@ -269,13 +274,15 @@ export function ResourcesView() {
               </button>
             );
           })}
-        </div>
+        </Reveal>
       </section>
 
       {/* Frameworks & templates */}
       <section className="mt-16">
-        <h2 className="font-serif text-2xl font-semibold">Frameworks, templates and mind maps</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <Reveal>
+          <h2 className="font-serif text-2xl font-semibold">Frameworks, templates and mind maps</h2>
+        </Reveal>
+        <Reveal group gap={110} className="mt-6 grid gap-4 md:grid-cols-3">
           {[
             {
               icon: Workflow,
@@ -298,11 +305,11 @@ export function ResourcesView() {
               <h3 className="mt-3 font-serif text-lg font-semibold">{f.title}</h3>
               <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">{f.line}</p>
               <p className="mt-3 font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground/70">
-                Shared in class & on the app
+                Shared in class &amp; on the app
               </p>
             </article>
           ))}
-        </div>
+        </Reveal>
       </section>
     </div>
   );

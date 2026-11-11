@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { animate, utils } from 'animejs';
 import { MessageCircle, Send, X } from 'lucide-react';
 
 import { BRAND } from '@/data/site';
 import { CHAT_STARTERS, matchIntent } from '@/data/chatbot';
+import { prefersReducedMotion } from '@/components/custom/reveal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -38,6 +40,47 @@ export function AIChatbot() {
   const typingTimerRef = useRef<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+
+  /* Floating crest button pops in whenever it (re)mounts. */
+  useLayoutEffect(() => {
+    if (open || !fabRef.current || prefersReducedMotion()) return;
+    animate(fabRef.current, {
+      opacity: [0, 1],
+      scale: [0.55, 1],
+      duration: 560,
+      ease: 'outBack(1.7)',
+    });
+  }, [open]);
+
+  /* Panel springs open from its bottom-right origin. */
+  useEffect(() => {
+    if (!open || !panelRef.current || prefersReducedMotion()) return;
+    utils.set(panelRef.current, { transformOrigin: '100% 100%' });
+    animate(panelRef.current, {
+      opacity: [0, 1],
+      scale: [0.93, 1],
+      y: [18, 0],
+      duration: 380,
+      ease: 'outCubic',
+    });
+  }, [open]);
+
+  /* Newest bubble glides in; also runs for the typing indicator. */
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const last = scrollRef.current?.lastElementChild as HTMLElement | null;
+    if (last) {
+      animate(last, {
+        opacity: [0, 1],
+        y: [10, 0],
+        scale: [0.98, 1],
+        duration: 300,
+        ease: 'outQuad',
+      });
+    }
+  }, [messages.length, typing]);
 
   /* Keep the transcript pinned to the newest message. */
   useEffect(() => {
@@ -108,6 +151,7 @@ export function AIChatbot() {
         <button
           type="button"
           onClick={openPanel}
+          ref={fabRef}
           aria-label="Open the History IAS assistant"
           aria-expanded={open}
           className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-primary shadow-lg ring-2 ring-gold/40 transition-transform duration-150 hover:scale-105"
@@ -124,6 +168,7 @@ export function AIChatbot() {
 
       {open && (
         <div
+          ref={panelRef}
           role="dialog"
           aria-modal="false"
           aria-label="History IAS assistant chat"

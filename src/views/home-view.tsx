@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { useApp } from '@/lib/store';
+import { Reveal } from '@/components/custom/reveal';
 import { BRAND, TESTIMONIALS, FAQS, LEARN_PILLARS, WHY_CHOOSE, AUDIENCES } from '@/data/site';
 
 export function HomeView() {
@@ -23,34 +24,44 @@ export function HomeView() {
     <div>
       {/* Hero: centred editorial statement, no crest, no stat table */}
       <section className="mx-auto max-w-6xl px-4 pb-16 pt-14 text-center sm:px-6 sm:pt-20 lg:pt-24">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
-          UPSC · UPPSC &amp; State PCS · Judiciary · Defence · Varanasi
-        </p>
-        <h1 className="mx-auto mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.2vw,3.6rem)] font-semibold leading-[1.08]">
-          Your Pathway to IAS, PCS, and UPSC Success.
-        </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-[16.5px] leading-relaxed text-muted-foreground">
-          Coaching for UPSC CSE, UPPSC and State PCS, judiciary, entrance and
-          defence examinations — taught since April 2007 from the Durgakund and
-          Lanka BHU Road campuses in Varanasi, by a Delhi-based faculty team,
-          with hybrid learning on the History IAS Academy app.
-        </p>
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-          <Button size="lg" className="h-11" onClick={() => setView('news')}>
-            Read today&apos;s briefing
-            <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden />
-          </Button>
-          <Button size="lg" variant="outline" className="h-11" onClick={() => setView('atlas')}>
-            <Map className="mr-1.5 h-4 w-4" aria-hidden />
-            Explore the 3D geo atlas
-          </Button>
-        </div>
-        <p className="mx-auto mt-8 max-w-xl font-serif text-[15px] italic leading-relaxed text-foreground/70">
-          &ldquo;Become an IAS.&rdquo; — the promise written on our crest.
-          <span className="mt-1 block font-mono text-[11px] not-italic tracking-wide text-muted-foreground">
-            HISTORY IAS ACADEMY · SINCE 2007
-          </span>
-        </p>
+        <Reveal delay={60} y={14}>
+          <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
+            UPSC · UPPSC &amp; State PCS · Judiciary · Defence · Varanasi
+          </p>
+        </Reveal>
+        <Reveal delay={180} y={24}>
+          <h1 className="mx-auto mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.2vw,3.6rem)] font-semibold leading-[1.08]">
+            Your Pathway to IAS, PCS, and UPSC Success.
+          </h1>
+        </Reveal>
+        <Reveal delay={320}>
+          <p className="mx-auto mt-5 max-w-2xl text-[16.5px] leading-relaxed text-muted-foreground">
+            Coaching for UPSC CSE, UPPSC and State PCS, judiciary, entrance and
+            defence examinations — taught since April 2007 from the Durgakund and
+            Lanka BHU Road campuses in Varanasi, by a Delhi-based faculty team,
+            with hybrid learning on the History IAS Academy app.
+          </p>
+        </Reveal>
+        <Reveal delay={470} y={14}>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <Button size="lg" className="h-11" onClick={() => setView('news')}>
+              Read today&apos;s briefing
+              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden />
+            </Button>
+            <Button size="lg" variant="outline" className="h-11" onClick={() => setView('atlas')}>
+              <Map className="mr-1.5 h-4 w-4" aria-hidden />
+              Explore the 3D geo atlas
+            </Button>
+          </div>
+        </Reveal>
+        <Reveal delay={640} y={12}>
+          <p className="mx-auto mt-8 max-w-xl font-serif text-[15px] italic leading-relaxed text-foreground/70">
+            &ldquo;Become an IAS.&rdquo; — the promise written on our crest.
+            <span className="mt-1 block font-mono text-[11px] not-italic tracking-wide text-muted-foreground">
+              HISTORY IAS ACADEMY · SINCE 2007
+            </span>
+          </p>
+        </Reveal>
       </section>
 
       {/* The History IAS method */}
@@ -64,7 +75,7 @@ export function HomeView() {
               Officer-disciplined, exam-honest, app-backed
             </p>
           </div>
-          <div className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal group gap={110} className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 word: 'Guide',
@@ -90,16 +101,18 @@ export function HomeView() {
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.line}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* What you'll learn: zig-zag editorial list */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="max-w-xl font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
-          What you learn here, in the order it matters
-        </h2>
-        <div className="mt-10 grid gap-x-16 gap-y-10 md:grid-cols-2">
+        <Reveal>
+          <h2 className="max-w-xl font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
+            What you learn here, in the order it matters
+          </h2>
+        </Reveal>
+        <Reveal group gap={90} className="mt-10 grid gap-x-16 gap-y-10 md:grid-cols-2">
           {LEARN_PILLARS.map((p, i) => (
             <article key={p.title} className="flex gap-4">
               <p.icon
@@ -112,16 +125,18 @@ export function HomeView() {
               </div>
             </article>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* Ten value props: a genuine ranked sequence */}
       <section className="border-y border-border bg-primary text-primary-foreground">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="max-w-2xl font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
-            Ten reasons aspirants choose History IAS Academy
-          </h2>
-          <ol className="mt-10 grid gap-x-12 gap-y-5 sm:grid-cols-2">
+          <Reveal>
+            <h2 className="max-w-2xl font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
+              Ten reasons aspirants choose History IAS Academy
+            </h2>
+          </Reveal>
+          <Reveal group gap={70} as="ol" className="mt-10 grid gap-x-12 gap-y-5 sm:grid-cols-2">
             {WHY_CHOOSE.map((b, i) => (
               <li key={b} className="flex items-baseline gap-4 border-b border-white/10 pb-4">
                 <span className="font-mono text-[12px] text-primary-foreground/60">
@@ -130,17 +145,19 @@ export function HomeView() {
                 <span className="text-[15px] leading-snug">{b}</span>
               </li>
             ))}
-          </ol>
+          </Reveal>
         </div>
       </section>
 
       {/* Who it is for */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-          <h2 className="max-w-xs font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
-            Whom the academy is for
-          </h2>
-          <ul className="flex flex-wrap gap-2.5">
+          <Reveal>
+            <h2 className="max-w-xs font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold leading-tight">
+              Whom the academy is for
+            </h2>
+          </Reveal>
+          <Reveal group gap={45} as="ul" className="flex flex-wrap gap-2.5">
             {AUDIENCES.map((a) => (
               <li
                 key={a}
@@ -149,23 +166,27 @@ export function HomeView() {
                 {a}
               </li>
             ))}
-          </ul>
+          </Reveal>
         </div>
       </section>
 
       {/* Voices from the classroom: enrolled aspirants, horizontal scroll */}
       <section className="border-t border-border bg-card/50">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <Reveal className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold">
               In their own words
             </h2>
             <p className="text-sm text-muted-foreground">
               Aspirants across our classroom, online and hybrid batches
             </p>
-          </div>
+          </Reveal>
         </div>
-        <div className="scroll-slim flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 sm:px-6 lg:px-[max(1.5rem,calc((100vw-72rem)/2))]">
+        <Reveal
+          group
+          gap={130}
+          className="scroll-slim flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-6 sm:px-6 lg:px-[max(1.5rem,calc((100vw-72rem)/2))]"
+        >
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
@@ -191,48 +212,54 @@ export function HomeView() {
               </figcaption>
             </figure>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* FAQ */}
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6">
-        <h2 className="font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold">
-          Questions aspirants ask before joining
-        </h2>
-        <Accordion type="single" collapsible className="mt-8">
-          {FAQS.map((f, i) => (
-            <AccordionItem key={i} value={`faq-${i}`}>
-              <AccordionTrigger className="text-left text-[15px] font-medium">
-                {f.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                {f.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <Reveal>
+          <h2 className="font-serif text-[clamp(1.6rem,3.4vw,2.2rem)] font-semibold">
+            Questions aspirants ask before joining
+          </h2>
+        </Reveal>
+        <Reveal group gap={70} className="mt-8">
+          <Accordion type="single" collapsible>
+            {FAQS.map((f, i) => (
+              <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionTrigger className="text-left text-[15px] font-medium">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Reveal>
       </section>
 
       {/* CTA */}
       <section className="border-t border-border">
         <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
-          <Trophy className="mx-auto h-5 w-5 text-gold" aria-hidden />
-          <h2 className="mx-auto mt-4 max-w-xl font-serif text-[clamp(1.7rem,3.6vw,2.4rem)] font-semibold leading-tight">
-            Become an IAS — begin at Durgakund or Lanka.
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Visit either campus, or call and WhatsApp +91 81880 10990 between
-            8 AM and 9 PM, any day of the week.
-          </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Button size="lg" className="h-11" onClick={() => setView('path')}>
-              See courses &amp; fees
-              <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden />
-            </Button>
-            <Button size="lg" variant="outline" className="h-11" onClick={() => setView('contact')}>
-              Talk to admissions
-            </Button>
-          </div>
+          <Reveal y={16}>
+            <Trophy className="mx-auto h-5 w-5 text-gold" aria-hidden />
+            <h2 className="mx-auto mt-4 max-w-xl font-serif text-[clamp(1.7rem,3.6vw,2.4rem)] font-semibold leading-tight">
+              Become an IAS — begin at Durgakund or Lanka.
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+              Visit either campus, or call and WhatsApp +91 81880 10990 between
+              8 AM and 9 PM, any day of the week.
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Button size="lg" className="h-11" onClick={() => setView('path')}>
+                See courses &amp; fees
+                <ArrowRight className="ml-1.5 h-4 w-4" aria-hidden />
+              </Button>
+              <Button size="lg" variant="outline" className="h-11" onClick={() => setView('contact')}>
+                Talk to admissions
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

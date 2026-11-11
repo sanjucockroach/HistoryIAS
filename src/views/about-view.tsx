@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { BadgeCheck, Landmark, ScrollText, GraduationCap, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Reveal } from '@/components/custom/reveal';
 import { useApp } from '@/lib/store';
 import { BRAND, ABOUT_FEATURES, LEADERSHIP } from '@/data/site';
 
@@ -13,13 +14,15 @@ export function AboutView() {
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr]">
         <div>
-          <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
-            About the academy
-          </p>
-          <h1 className="mt-3 font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
-            Nearly two decades of IAS, PCS and UPSC teaching in Varanasi
-          </h1>
-          <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-muted-foreground">
+          <Reveal y={16}>
+            <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-gold-ink">
+              About the academy
+            </p>
+            <h1 className="mt-3 font-serif text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.1]">
+              Nearly two decades of IAS, PCS and UPSC teaching in Varanasi
+            </h1>
+          </Reveal>
+          <Reveal delay={140} className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-muted-foreground">
             <p>
               History IAS Academy was established in {BRAND.establishedNote} with one
               promise written on its crest: {BRAND.crestMotto}. Managed under Rudra
@@ -35,9 +38,9 @@ export function AboutView() {
               keeps long hours productive. Mock tests, evaluations and one-on-one
               mentoring carry every batch from foundation to the interview board.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="rule-ring mt-10 border-t pt-8">
+          <Reveal className="rule-ring mt-10 border-t pt-8">
             <h2 className="font-serif text-xl font-semibold">What the campus features</h2>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {ABOUT_FEATURES.map((f) => (
@@ -47,10 +50,10 @@ export function AboutView() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Infrastructure strip */}
-          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+          <Reveal group gap={140} className="mt-10 grid gap-5 sm:grid-cols-2">
             <figure className="overflow-hidden rounded-xl border border-border bg-card">
               <Image
                 src="/brand/smart-classroom.png"
@@ -75,11 +78,11 @@ export function AboutView() {
                 Quiet study environment near BHU
               </figcaption>
             </figure>
-          </div>
+          </Reveal>
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-xl border border-border bg-primary p-6 text-primary-foreground">
+          <Reveal delay={220} className="rounded-xl border border-border bg-primary p-6 text-primary-foreground">
             <ScrollText className="h-5 w-5 text-gold" aria-hidden />
             <blockquote className="mt-3 font-serif text-[17px] italic leading-relaxed">
               {BRAND.mission}
@@ -87,9 +90,9 @@ export function AboutView() {
             <figcaption className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-primary-foreground/70">
               {BRAND.tagline} · {BRAND.legalName}
             </figcaption>
-          </div>
+          </Reveal>
 
-          <div className="rounded-xl border border-border bg-card p-6">
+          <Reveal delay={320} className="rounded-xl border border-border bg-card p-6">
             <h2 className="font-serif text-lg font-semibold">At a glance</h2>
             <dl className="mt-4 space-y-3 text-sm">
               {[
@@ -108,12 +111,13 @@ export function AboutView() {
                 </div>
               ))}
             </dl>
-          </div>
+          </Reveal>
         </aside>
       </div>
 
       {/* Mentorship panel: the academy's own leadership claim */}
-      <section
+      <Reveal
+        as="section"
         aria-labelledby="leadership-heading"
         className="mt-16 rounded-xl border border-border bg-card p-6 sm:p-8"
       >
@@ -178,10 +182,10 @@ export function AboutView() {
             </p>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       {/* Public values, taught as practice */}
-      <section className="mt-16 rounded-xl border border-border bg-card p-6 sm:p-8">
+      <Reveal className="mt-16 rounded-xl border border-border bg-card p-6 sm:p-8">
         <div className="flex items-center gap-2.5">
           <Landmark className="h-5 w-5 text-gold-ink" aria-hidden />
           <h2 className="font-serif text-xl font-semibold">
@@ -219,7 +223,7 @@ export function AboutView() {
             See a day of classes in the briefing
           </Button>
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 }
